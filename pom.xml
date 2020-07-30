@@ -163,7 +163,7 @@
           <dependencies>
             <dependency>
               <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>.gitignore
+              <artifactId>mapstruct-processor</artifactId>
               <version>1.4.0.Beta3</version>
             </dependency>
           </dependencies>
