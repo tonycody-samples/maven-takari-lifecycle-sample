@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>maven-parallel</artifactId>
+  <artifactId>takari-lifecycle-sample</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
@@ -30,20 +30,17 @@
       <artifactId>junit</artifactId>
     </dependency>
     <dependency>
-      <scope>provided</scope>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
-      <scope>compile</scope>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
     </dependency>
-    <dependency>
-      <scope>compile</scope>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct-processor</artifactId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.mapstruct</groupId>-->
+    <!--      <artifactId>mapstruct-processor</artifactId>-->
+    <!--    </dependency>-->
   </dependencies>
 
   <dependencyManagement>
@@ -106,6 +103,10 @@
         <groupId>io.takari.maven.plugins</groupId>
         <artifactId>takari-lifecycle-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.bsc.maven</groupId>
+        <artifactId>maven-processor-plugin</artifactId>
+      </plugin>
     </plugins>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
@@ -119,7 +120,7 @@
             <proc>proc</proc>
             <source>1.8</source>
             <target>1.8</target>
-            <compilerId>jdt</compilerId>
+            <compilerId>javac</compilerId>
             <!--            <annotationProcessors>-->
             <!--              <annotationProcessor>-->
 
@@ -128,13 +129,13 @@
 
             <!--              </processor>-->
             <!--            </annotationProcessors>-->
-            <annotationProcessorOptions>
-              <options>
-                <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>
-                <mapstruct.defaultComponentModel>default</mapstruct.defaultComponentModel>
-                <mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>
-              </options>
-            </annotationProcessorOptions>
+            <!--            <annotationProcessorOptions>-->
+            <!--              <options>-->
+            <!--                <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>-->
+            <!--                <mapstruct.defaultComponentModel>default</mapstruct.defaultComponentModel>-->
+            <!--                <mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>-->
+            <!--              </options>-->
+            <!--            </annotationProcessorOptions>-->
           </configuration>
           <executions>
             <execution>
@@ -145,6 +146,39 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.bsc.maven</groupId>
+          <artifactId>maven-processor-plugin</artifactId>
+          <version>2.2.4</version>
+          <executions>
+            <execution>
+              <id>process</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>process</goal>
+              </goals>
+            </execution>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>.gitignore
+              <version>1.4.0.Beta3</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <defaultOutputDirectory>${project.build.directory}/generated-sources
+            </defaultOutputDirectory>
+            <processors>
+              <processor>org.mapstruct.ap.MappingProcessor</processor>
+            </processors>
+            <options>
+              <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>
+              <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
+              <mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>
+            </options>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
