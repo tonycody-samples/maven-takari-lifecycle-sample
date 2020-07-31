@@ -18,6 +18,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -26,4 +29,17 @@
       <artifactId>junit</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!--      <plugin>-->
+      <!--        <groupId>io.takari.maven.plugins</groupId>-->
+      <!--        <artifactId>takari-lifecycle-plugin</artifactId>-->
+      <!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.bsc.maven</groupId>-->
+      <!--        <artifactId>maven-processor-plugin</artifactId>-->
+      <!--      </plugin>-->
+    </plugins>
+  </build>
 </project>

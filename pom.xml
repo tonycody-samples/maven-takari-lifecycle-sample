@@ -16,12 +16,21 @@
     <module>m5</module>
   </modules>
 
-  <name>Maven Takari Lifecycle Simple</name>
+  <name>Maven Takari Lifecycle Sample</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdk.version>1.8</jdk.version>
+
+    <junit.version>4.11</junit.version>
+    <lombok.version>1.18.12</lombok.version>
+    <mapstruct.version>1.3.1.Final</mapstruct.version>
+
+    <takari.lifecycle.plugin.version>2.0.0</takari.lifecycle.plugin.version>
+    <maven.processor.plugin.version>2.2.4</maven.processor.plugin.version>
+    <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
   </properties>
 
   <dependencies>
@@ -37,63 +46,60 @@
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.mapstruct</groupId>-->
-    <!--      <artifactId>mapstruct-processor</artifactId>-->
-    <!--    </dependency>-->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct-processor</artifactId>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <scope>provided</scope>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.12</version>
-      </dependency>
-      <dependency>
-        <scope>compile</scope>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>
-        <version>1.4.0.Beta3</version>
+        <version>${mapstruct.version}</version>
       </dependency>
       <dependency>
-        <scope>compile</scope>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct-processor</artifactId>
-        <version>1.4.0.Beta3</version>
+        <version>${mapstruct.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.11</version>
+        <version>${junit.version}</version>
         <scope>test</scope>
       </dependency>
-      <dependency>
-        <groupId>org.example</groupId>
-        <artifactId>m1</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.example</groupId>
-        <artifactId>m2</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.example</groupId>
-        <artifactId>m3</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.example</groupId>
-        <artifactId>m4</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.example</groupId>
-        <artifactId>m5</artifactId>
-        <version>${project.version}</version>
-      </dependency>
+      <!--      <dependency>-->
+      <!--        <groupId>org.example</groupId>-->
+      <!--        <artifactId>m1</artifactId>-->
+      <!--        <version>${project.version}</version>-->
+      <!--      </dependency>-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.example</groupId>-->
+      <!--        <artifactId>m2</artifactId>-->
+      <!--        <version>${project.version}</version>-->
+      <!--      </dependency>-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.example</groupId>-->
+      <!--        <artifactId>m3</artifactId>-->
+      <!--        <version>${project.version}</version>-->
+      <!--      </dependency>-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.example</groupId>-->
+      <!--        <artifactId>m4</artifactId>-->
+      <!--        <version>${project.version}</version>-->
+      <!--      </dependency>-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.example</groupId>-->
+      <!--        <artifactId>m5</artifactId>-->
+      <!--        <version>${project.version}</version>-->
+      <!--      </dependency>-->
     </dependencies>
   </dependencyManagement>
 
@@ -103,83 +109,108 @@
         <groupId>io.takari.maven.plugins</groupId>
         <artifactId>takari-lifecycle-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.bsc.maven</groupId>
-        <artifactId>maven-processor-plugin</artifactId>
-      </plugin>
+      <!--      <plugin>-->
+      <!--        <groupId>org.bsc.maven</groupId>-->
+      <!--        <artifactId>maven-processor-plugin</artifactId>-->
+      <!--      </plugin>-->
     </plugins>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
         <plugin>
           <groupId>io.takari.maven.plugins</groupId>
           <artifactId>takari-lifecycle-plugin</artifactId>
-          <version>2.0.0</version>
+          <version>${takari.lifecycle.plugin.version}</version>
           <extensions>true</extensions>
+          <!--          <dependencies>-->
+          <!--            <dependency>-->
+          <!--              <groupId>org.mapstruct</groupId>-->
+          <!--              <artifactId>mapstruct-processor</artifactId>-->
+          <!--              <version>${mapstruct.version}</version>-->
+          <!--            </dependency>-->
+          <!--          </dependencies>-->
           <configuration>
             <parameters>true</parameters>
             <proc>proc</proc>
-            <source>1.8</source>
-            <target>1.8</target>
-            <compilerId>javac</compilerId>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
             <!--            <annotationProcessors>-->
-            <!--              <annotationProcessor>-->
-
-            <!--              </annotationProcessor>-->
-            <!--              <processor>-->
-
-            <!--              </processor>-->
+            <!--              <processor>org.mapstruct.ap.MappingProcessor</processor>-->
+            <!--              <annotationProcessor>org.mapstruct.ap.MappingProcessor</annotationProcessor>-->
             <!--            </annotationProcessors>-->
-            <!--            <annotationProcessorOptions>-->
-            <!--              <options>-->
-            <!--                <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>-->
-            <!--                <mapstruct.defaultComponentModel>default</mapstruct.defaultComponentModel>-->
-            <!--                <mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>-->
-            <!--              </options>-->
-            <!--            </annotationProcessorOptions>-->
-          </configuration>
-          <executions>
-            <execution>
-              <id>compile</id>
-              <goals>
-                <goal>compile</goal>
-                <goal>testCompile</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.bsc.maven</groupId>
-          <artifactId>maven-processor-plugin</artifactId>
-          <version>2.2.4</version>
-          <executions>
-            <execution>
-              <id>process</id>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>process</goal>
-              </goals>
-            </execution>
-          </executions>
-          <dependencies>
-            <dependency>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>
-              <version>1.4.0.Beta3</version>
-            </dependency>
-          </dependencies>
-          <configuration>
-            <defaultOutputDirectory>${project.build.directory}/generated-sources
-            </defaultOutputDirectory>
-            <processors>
-              <processor>org.mapstruct.ap.MappingProcessor</processor>
-            </processors>
-            <options>
+            <annotationProcessorOptions>
               <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>
-              <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
+              <mapstruct.defaultComponentModel>default</mapstruct.defaultComponentModel>
               <mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>
-            </options>
+            </annotationProcessorOptions>
+            <compilerId>javac</compilerId>
           </configuration>
+          <executions>
+            <execution>
+              <id>jar</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+            <!--            <execution>-->
+            <!--              <id>process</id>-->
+            <!--              <phase>generate-sources</phase>-->
+            <!--              <goals>-->
+            <!--                <goal>mojo-annotation-processor</goal>-->
+            <!--              </goals>-->
+            <!--            </execution>-->
+          </executions>
         </plugin>
+<!--        <plugin>-->
+<!--          <artifactId>maven-compiler-plugin</artifactId>-->
+<!--          <version>${maven.compiler.plugin.version}</version>-->
+<!--          <configuration>-->
+<!--            <skip>true</skip>-->
+<!--            <skipMain>true</skipMain>-->
+<!--            <source>${jdk.version}</source>-->
+<!--            <target>${jdk.version}</target>-->
+<!--            <annotationProcessorPaths>-->
+<!--              <path>-->
+<!--                <groupId>org.mapstruct</groupId>-->
+<!--                <artifactId>mapstruct-processor</artifactId>-->
+<!--                <version>${mapstruct.version}</version>-->
+<!--              </path>-->
+<!--            </annotationProcessorPaths>-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+        <!--        <plugin>-->
+        <!--          <groupId>org.bsc.maven</groupId>-->
+        <!--          <artifactId>maven-processor-plugin</artifactId>-->
+        <!--          <version>${maven.processor.plugin.version}</version>-->
+        <!--          <executions>-->
+        <!--            <execution>-->
+        <!--              <id>process</id>-->
+        <!--              <phase>generate-sources</phase>-->
+        <!--              <goals>-->
+        <!--                <goal>process</goal>-->
+        <!--              </goals>-->
+        <!--            </execution>-->
+        <!--          </executions>-->
+        <!--          <dependencies>-->
+        <!--            <dependency>-->
+        <!--              <groupId>org.mapstruct</groupId>-->
+        <!--              <artifactId>mapstruct-processor</artifactId>-->
+        <!--              <version>${mapstruct.version}</version>-->
+        <!--            </dependency>-->
+        <!--          </dependencies>-->
+        <!--          <configuration>-->
+        <!--            <defaultOutputDirectory>-->
+        <!--              ${project.build.directory}/generated-sources-->
+        <!--            </defaultOutputDirectory>-->
+        <!--            <processors>-->
+        <!--              <processor>org.mapstruct.ap.MappingProcessor</processor>-->
+        <!--            </processors>-->
+        <!--            <options>-->
+        <!--              <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>-->
+        <!--              <mapstruct.defaultComponentModel>default</mapstruct.defaultComponentModel>-->
+        <!--              <mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>-->
+        <!--            </options>-->
+        <!--          </configuration>-->
+        <!--        </plugin>-->
       </plugins>
     </pluginManagement>
   </build>
